@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Family Plus</title>
+        <meta charset="UTF=8">
+        <meta name="discription" content="Get together with your family!">
+        <meta name="keywords" content="family tree, family">
+        <meta name="author" content="Mohamed Razeen">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+        <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
+
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAGEz3OeWFD5jr4xgYF9TzwaMItJzv9vBg",
+            authDomain: "family-plus-f25c0.firebaseapp.com",
+            databaseURL: "https://family-plus-f25c0.firebaseio.com",
+            projectId: "family-plus-f25c0",
+            storageBucket: "family-plus-f25c0.appspot.com",
+            messagingSenderId: "682166671775",
+            appId: "1:682166671775:web:76ccec7ce47cfce66685aa"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        </script>
+    </head>
+    <body>
+        <div class="header" id="head">
+            <h2 style="margin-left: 10px;">Family Plus</h2>
+            <button type="button" id="loginBtn" onclick="Login();">Login</button>
+            <button type="button" id="SignupBtn"onclick="Login();">Sign Up</button>
+        </div>
+        <div id="firstpage">
+            <p><h1 style="justify-content: start;">Family Plus</h1></p>
+            <h2>Create Your Own Family tree</h2>
+            <p id="firstpagep"><strong>Family Plus</strong> helps bring your family closer,<br> by maintaining your own family tree<br> With features like chatting, sharing media<br>tracking your family and more</p>
+            <button type="button" class="JoinBtn"id="firstpageBtn" onclick="Login();">Join Now</button>
+        </div>
+        <div id="secondpage">
+            <h2>Track Your Family</h2>
+            <p>Ensure their safety <br> Anytime, Anywhere, with convenience</p>
+            <h2>Be Updated</h2>
+            <p>Always get notified when there is a family event<br>Like birthdays, anniversaries, etc<br>Now you dont have to remember about your siblings birthdays<br><strong>Family Plus</strong> will do it for you</p>
+        </div>
+        <div id="thirdpage">
+            <p id="thirdpagep1">Noteworthy</p>
+            <h2 style="font-size: 25px; font-weight: 700;">Socialize</h2>
+            <p>Chat with your family<br>Share your pics and vids<br>Ensure your elders are always safe<br>by sharing medicine prescriptions, etc</p>
+            <p style="margin-top: 30px;"><h2>Ensure Your Family's Safety</h2></p>
+            <p style="margin-top: 0px;"><strong>Family Plus</strong> is created for promoting family safety<br>And for bringing families closer to each other</p>
+            <button class="JoinBtn" id="joinbtn2" onclick="Login();">Join today</button>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

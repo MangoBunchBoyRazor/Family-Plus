@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="acc.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <title>Family Plus</title>
+
+        <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
+        <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAGEz3OeWFD5jr4xgYF9TzwaMItJzv9vBg",
+            authDomain: "family-plus-f25c0.firebaseapp.com",
+            databaseURL: "https://family-plus-f25c0.firebaseio.com",
+            projectId: "family-plus-f25c0",
+            storageBucket: "family-plus-f25c0.appspot.com",
+            messagingSenderId: "682166671775",
+            appId: "1:682166671775:web:76ccec7ce47cfce66685aa"
+        };
+        firebase.initializeApp(firebaseConfig);
+        </script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <h2 style="margin-left: 10px;">Family Plus</h2>
+        <div id="Logindiv">
+            <h3 style="margin-left: 32.25%;">Login to Family Plus</h3>
+            <h5 class="username" style="margin-bottom: 0px;">Username</h5><br>
+            <input type="text" id="username"></input><br>
+            <h5 class="password" style="margin-bottom: 0px">Password</h5><br>
+            <input type="password" id="password"></input><br>
+            <button type="button" id="logBtn" onclick="login()">Login</button><br>
+            <p style="font-size: 13px; color: #ccccccaa; margin-left: 22%;">Need an account? <a onclick="change();">Register</a></p>
+        </div>
+    </body>
+</html>
