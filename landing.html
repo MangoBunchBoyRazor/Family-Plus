@@ -23,16 +23,22 @@
         </script>
         <script src="script.js"></script>
     </head>
-    <body>
-        <h2 style="margin-left: 10px;">Family Plus</h2>
+    <body onload = "database.ref('accounts').on('value',(data)=>accs=data.val());">
+        <div id="background" style="position: absolute; top: 0%; left: 0%; height: 100vh; width: 100vw;"></div>
+        <div class="header" id="head" style="backdrop-filter: blur(5px);">
+            <h2 style="margin-left: 50px; cursor: pointer; color: black;" onclick="document.location.pathname='/index.html'">Family Plus</h2>
+            <a href="about.html" class="href" style="top: 4%;left: 80%; color: black">About</a>
+            <a href="landing.html" class="href" style="top: 4%;left: 85%; color: black">Login</a>
+            <a href="landing.html" class="href" style="top: 4%;left: 90%; color: black">Sign Up</a>
+        </div>
         <div id="Logindiv">
             <h3 style="margin-left: 32.25%;">Login to Family Plus</h3>
-            <h5 class="username" style="margin-bottom: 0px;">Username</h5><br>
-            <input type="text" id="username"></input><br>
-            <h5 class="password" style="margin-bottom: 0px">Password</h5><br>
-            <input type="password" id="password"></input><br>
-            <button type="button" id="logBtn" onclick="login()">Login</button><br>
-            <p style="font-size: 13px; color: #ccccccaa; margin-left: 22%;">Need an account? <a onclick="change();">Register</a></p>
+            <input type="text" id="username" onfocus="document.getElementById('usela').style.top='19%';" onblur="if(this.value == '')document.getElementById('usela').style.top='24%';"></input><br>
+            <label for = "username" class="username" style="margin-bottom: 0px;" id="usela">Username</label><br>
+            <input type="password" id="password" onfocus="document.getElementById('pssla').style.top='40%';" onblur="if(this.value == '')document.getElementById('pssla').style.top='45%';"></input><br>
+            <label for="password"class="password" style="margin-bottom: 0px" id="pssla">Password</label><br>
+            <button type="button" class="logBtn" onclick="login()">Login</button>
+            <button onclick="signup();" class="logBtn" style="margin-left: 10px">Sign Up</button>
         </div>
     </body>
 </html>

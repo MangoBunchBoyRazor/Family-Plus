@@ -26,32 +26,22 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         </script>
+
+        <script src="three.r119.min.js"></script>
+        <script src="vanta.halo.min.js"></script>
     </head>
-    <body>
+    <body onload = "database.ref('accounts').on('value',(data)=>accs=data.val());loadNam();">
+        <div id="background" style="width: 100vw; height: 100vh;"></div>
         <div class="header" id="head">
-            <h2 style="margin-left: 10px;">Family Plus</h2>
-            <button type="button" id="loginBtn" onclick="Login();">Login</button>
-            <button type="button" id="SignupBtn"onclick="Login();">Sign Up</button>
+            <h2 style="margin-left: 50px; cursor: pointer;" onclick="document.location.pathname='/index.html'">Family Plus</h2>
+            <a href="about.html" class="href" style="top: 4%;left: 80%;">About</a>
+            <a href="landing.html" class="href" style="top: 4%;left: 85%;">Login</a>
+            <a href="landing.html" class="href" style="top: 4%;left: 90%;">Sign Up</a>
         </div>
         <div id="firstpage">
-            <p><h1 style="justify-content: start;">Family Plus</h1></p>
-            <h2>Create Your Own Family tree</h2>
-            <p id="firstpagep"><strong>Family Plus</strong> helps bring your family closer,<br> by maintaining your own family tree<br> With features like chatting, sharing media<br>tracking your family and more</p>
+            <h1 style="justify-content: start; color: #9471e6" id="firstpageh1">Family Plus</h1>
+            <h2 style="color: #e416c8;" id="firstpageh2">Create Your Own Family tree</h2>
             <button type="button" class="JoinBtn"id="firstpageBtn" onclick="Login();">Join Now</button>
-        </div>
-        <div id="secondpage">
-            <h2>Track Your Family</h2>
-            <p>Ensure their safety <br> Anytime, Anywhere, with convenience</p>
-            <h2>Be Updated</h2>
-            <p>Always get notified when there is a family event<br>Like birthdays, anniversaries, etc<br>Now you dont have to remember about your siblings birthdays<br><strong>Family Plus</strong> will do it for you</p>
-        </div>
-        <div id="thirdpage">
-            <p id="thirdpagep1">Noteworthy</p>
-            <h2 style="font-size: 25px; font-weight: 700;">Socialize</h2>
-            <p>Chat with your family<br>Share your pics and vids<br>Ensure your elders are always safe<br>by sharing medicine prescriptions, etc</p>
-            <p style="margin-top: 30px;"><h2>Ensure Your Family's Safety</h2></p>
-            <p style="margin-top: 0px;"><strong>Family Plus</strong> is created for promoting family safety<br>And for bringing families closer to each other</p>
-            <button class="JoinBtn" id="joinbtn2" onclick="Login();">Join today</button>
         </div>
         <script src="script.js"></script>
     </body>
