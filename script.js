@@ -127,7 +127,7 @@ function createDashboard(){
             if(acc.family == null){
                 tree.innerHTML = `<h3 class="text-uppercase  font-weight-bold"style="color: #0039a6;">Your Family Tree</h3><p class="mt-5 lead">Your family tree is yet to be created</p><button onclick="changenav(\'fam\'); acc.createTree();" class="btn btn-secondary btn-outline-black">Create your Family Tree</button>`;
             } else {
-                tree.innerHTML = `<h3 class="text-uppercase  font-weight-bold" style="color: #0039a6;">Your Family Tree</h3><hr class="hr-dark" style = "width: 80%;"><div class="tf-tree" id="tree-div"></div><!--h3 class="text-uppercase mt-5">Upcoming events</h3><hr class="hr-dark" style="width: 80%;"><p id="mybirthday" class="lead"-->`;
+                tree.innerHTML = `<h3 class="text-uppercase  font-weight-bold" style="color: #0039a6;">Your Family Tree</h3><hr class="hr-dark" style = "width: 80%;"><div class="tf-tree" id="tree-div"></div>`;
                
                 let div = document.getElementById("tree-div");
                 
@@ -173,15 +173,16 @@ function createDashboard(){
                 for(var name in accs) {
                     var current = accs[name];
 
+                    //birthdays
+                    let day = current.date_of_birth.slice(0,2);
+                    let month = current.date_of_birth.slice(3,5) * 1;
+                    let year = current.date_of_birth.slice(6);
+                    let date = new Date(year,month-1,day);
+
                     if(document.getElementById(name + "li")) {
                         
                         let el = document.getElementById(name+"li").children[0];
                         console.log(el);
-
-                        let day = current.date_of_birth.slice(0,2);
-                        let month = current.date_of_birth.slice(3,5) * 1;
-                        let year = current.date_of_birth.slice(6);
-                        let date = new Date(month-1,day,year)
 
                         let content1 = "<h5 style='font-weight: 700'>"+current.name+"</h5><p class='lead'>"+current.gender+", born on: "+date.toDateString();
                         
@@ -242,7 +243,7 @@ function changenav(asd){
 
     var dasBody = '<h3 style="color: #0039a6;">Your family tree</h3>';
     var setupBody = '<div class="text-center text-white"><h3>Set up your account</h3><br><h5>What is your username?</h5><input type="text" id="setup-username" placeholder="Your username here..." class="text-left"><br><h5 class="mt-3">What is your gender?</h5><input type="radio" name="setup-gender" value="male" id="setup-gender-male"><label for="setup-gender-male">Male</label><br><input type="radio" name="setup-gender" value="female" id="setup-gender-female"><label for="setup-gender-female">Female</label><br><h5 class="mt-3">Your Date Of Birth:</h5><input type="text" id="setup-dob-input" placeholder="dd-mm-yy"><br><button class="btn btn-secondary mt-5" onclick="setupacc();">set up my account</button></div>'
-    var locBody = '<h3>Hobbies and Professions</h3><p>Setup Your hobbies so that others can know more about you. Also know about others professions so that you dont go to strangers to get your work done.';
+    var locBody = '<h3 class="text-uppercase font-weight-bold" style="color: #0039a6;">Birthdays</h3><hr class="hr-dark"><div id="famBirths" class="text-left">Check your family members birthday\'s here<br></div>';
     var profBody = '<div class="text-center text-white"><img src = "user-solid.svg" class="mx-auto my-5" style="width: 15%; height: 15%;" data-toggle="tooltip" title="Change profile pic"><h5 id="profile-name" class="mt-3 font-weight-bold text-uppercase" style="font-size: 2.5rem;"></h5><p class="text-center lead" id="profile-about"></p></div>';
     var famBody;
     if(asd == "das"){
@@ -264,6 +265,40 @@ function changenav(asd){
         document.getElementById("maincontent").innerHTML = locBody;
         document.getElementById("maincontent").style.border = "2px solid black";
         document.getElementById("maincontent").style.background = "linear-gradient(#f5f7fa, #c3cfe2)";
+
+        for(var name in accs) {
+            var current = accs[name];
+
+            let day = current.date_of_birth.slice(0,2);
+            let month = current.date_of_birth.slice(3,5) * 1;
+            let birthdate = new Date(2020,month-1,day);
+            let today = new Date();
+
+            let par = document.createElement("p");
+            if(current.name !== auth.currentUser.displayName){
+                par.innerHTML = current.name + " was born on " + birthdate.toDateString();
+                document.getElementById("famBirths").appendChild(par);
+            }
+
+            if(today.getTime() < birthdate.getTime()) {
+                let daysDiff = Math.ceil((birthdate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+                if(daysDiff < 20) {
+                    let para = document.createElement("p");
+                    para.classList.add("lead");
+                    para.classList.add("font-weight-bold");
+                    para.classList.add("text-info");
+
+                    if(current.name == auth.currentUser.displayName){
+                        para.innerHTML = "Your birthday is close!"
+                    }
+                    else{
+                        para.innerHTML = current.name + "'s birthday is on "+birthdate.toDateString()+", which is close!";
+                    }
+
+                    document.getElementById("maincontent").appendChild(para);
+                }
+            }
+        }
     }
     else if(asd == "pof"){
         if(auth.currentUser.displayName){
