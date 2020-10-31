@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/jquery.min.js"></script>
+        <script src="jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js"></script>
+        <link href="jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+        <script src="acc.js"></script>
+        
+        <title>Family Plus</title>
+        <link rel="icon" href="favicon.png"/>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+        <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAGEz3OeWFD5jr4xgYF9TzwaMItJzv9vBg",
+            authDomain: "family-plus-f25c0.firebaseapp.com",
+            databaseURL: "https://family-plus-f25c0.firebaseio.com",
+            projectId: "family-plus-f25c0",
+            storageBucket: "family-plus-f25c0.appspot.com",
+            messagingSenderId: "682166671775",
+            appId: "1:682166671775:web:76ccec7ce47cfce66685aa"
+        };
+        firebase.initializeApp(firebaseConfig);
+        </script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="MDB-Free_4.19.1/css/mdb.css">
+        <link rel="stylesheet" href="https://unpkg.com/treeflex/dist/css/treeflex.css">
+	
+        <script src="https://kit.fontawesome.com/5929f9a901.js" crossorigin="anonymous"></script>
+
+        <style>
+            body {
+                font-family: 'Source Serif Pro';
+            }
+              
+            html, body, header, .view { height: 100%; }
+    
+            .navbar:not(.top-nav-collapse) {
+              background: transparent !important;
+            }
+            @media (max-width: 740px) {
+              html, body, header, .view {
+                height: 100vh;
+              }
+            }
+            @media (max-width: 350px) {
+              .display-3 {
+                font-size: 2.5rem;
+              }
+            }
+  
+            h5 { letter-spacing: 3px;}  
+            .hr-light { border-top: 6px solid #fff; border-radius: 20px; width: 200px;}
+
+            .myimg{
+              width:300px;
+              height:300px;
+              object-fit:cover;
+              border-radius:50%;
+            }
+        </style>
+
+        <!-- jQuery -->
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/mdb.min.js"></script>
+        <script>new WOW().init();</script>
+        
+    </head>
+    <body>
+      <script src="script.js"></script>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top scrolling-navbar" id="login-nav">
+            <div class="container">
+              <a class="navbar-brand" href="index.html"><img src="logo.png" height="50" width="50"><strong>Family Plus</strong></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#naver" aria-controls="naver" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="naver">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="about.html">About</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link waves-effect waves-light" href="login.html">Sign Up</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link waves-effect waves-light" href="login.html">Log In</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+        <!-- Full Page Intro -->
+        <div class="view jarallax" id="login-div" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0;" data-jarallax-original-styles="background-image: url('backgroundImages/loginImg.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+              <!-- Content -->
+              <div class="container">
+                <!--Grid row-->
+                <div class="row mt-5">
+                  <!--Grid column-->
+                  <div class="col-md-6 mb-5 mt-md-0 mt-5 white-text text-center text-md-left" style="backdrop-filter: blur(5px);">
+                    <h1 class="h1-responsive text-uppercase white-text wow fadeInLeft animated pt-3" data-wow-delay="0.2s" style="visibility: visible; animation-name: fadeInLeft; animation-delay: 0.3s; font-weight: 700">The Goal of family plus</h1>
+                    <hr class="hr-light wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft; animation-name: 0.2s; width: 100%;">
+                    <p class="text-uppercase mb-4 white-text wow fadeInLeft animated lead" style="visibility: visible; animation-name: fadeInLeft; animation-delay: 0.5s; font-weight: 200;">
+                        Family Plus is created to promote security and
+                        welfare amongst family members.
+                    </p>
+                    <a href="about.html" class="btn btn-outline-white wow fadeInLeft waves-effect waves-light animated" style="visibility: visible; animation-name: fadeInLeft; animation-delay: 0.2s;">More</a>
+                  </div>
+                  <div class="col-md-6 col-xl-5 mb-4">
+                    <div class="card wow fadeInRight animated" style="visibility: visible; animation-name: fadeInRight; animation-delay: 0.3s; background-color: rgba(126, 123, 215, 0.2);">
+                        <div class="card-body" id="Logindiv">
+                          <form>
+                            <div class="text-center">
+                                <h3 class="h3-responsive text-uppercase white-text">Login to Family Plus</h3>
+                            </div>
+                            <hr class="hr-light" style="width: 100%; border: none; border-top: 2px solid white;">
+                            <div class="md-form">
+                              <i class="fas fa-user prefix white-text"></i>
+                              <input type="text" id="email" class="white-text form-control"></input>
+                              <label for="email" id="useel" class="text-uppercase white-text">Email</label>
+                            </div>
+                            <div class="md-form">
+                                <i class="fas fa-lock prefix white-text"></i>
+                                <input type="password" id="password" class="white-text form-control"></input>
+                                <label for="password" id="pssla" class="text-uppercase white-text">Password</label>
+                            </div>
+                            <div class="md-form pl-sm-5 ml-lg-5">
+                                <div class="btn-group btn-group-lg">
+                                    <button type="button" class="logBtn btn btn-outline-white" onclick="login()">Login</button>
+                                    <button onclick="signup();" type="button" class="logBtn btn btn-outline-white">Sign Up</button>
+                                </div>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                  </div>
+                  <!--Grid column-->
+                </div>
+                <!--Grid row-->
+              </div>
+              <!-- Content -->
+            </div>
+            <!-- Mask & flexbox options-->
+          <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;backgroundImages/loginImg.jpg&quot;); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar" id="landing-nav" style="visibility: hidden; background-color: cornflowerblue !important;">
+            <div class="container" style="overflow: visible;">
+                <a class="navbar-brand" href="index.html"><img src="logo.png" height="50" width="50" class="mx-auto"><strong>Family Plus<strong></strong></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#naver" aria-controls="naver" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="naver">
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle btn btn-outline-black btn-lg px-md-5 mx-md-3" href="#" id="navbardrop" data-toggle="dropdown">
+                          Menu
+                        </a>
+                        <div class="dropdown-menu">
+                          <a id="Pof" onclick="changenav(`pof`);" class="nav-link">Your Profile</a>
+                          <a id="Das" onclick="changenav(`das`);" class="nav-link">Dashboard</a>
+                          <a id="Fam" onclick="changenav(`fam`);" class="nav-link">Family Tree</a>
+                          <a id="Loc" onclick="changenav(`loc`);" class="nav-link">Hobbies & Professions</a>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <span class="nav-text"  onclick = "changenav('pof');">
+                        <h3 id="nav-user-name">
+                            <i class="fas fa-user prefix"></i>
+                            Sample User Name
+                        </h3>
+                    </span>
+                    <span class="nav-text mx-3">
+                        <a onclick="logout();" id="logoutBtn" class="btn btn-outline-black btn-lg">Log Out</a>
+                    </span>    
+                </div>
+            </div>
+        </nav>
+        <div class="view jarallax" id="landing-div" data-jarallax="{&quot;speed&quot;: 0.2}" style="margin-top: 150px; overflow-y: scroll; background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0; visibility: hidden;" data-jarallax-original-styles="background-image: url('https://wallpapercave.com/wp/wp4469529.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12 white-text">
+                    <div id="maincontent" class="bg-light text-center black-text mt-5 rounded-lg p-2  mx-auto">
+                      <h3 class="text-uppercase" style="color: #0039a6 !important;">Your family tree</h3>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://wallpapercave.com/wp/wp4469529.jpg&quot;); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div>
+          </div>
+        </div>
+  </body>
+</html>

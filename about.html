@@ -2,56 +2,102 @@
 <html>
     <head>
         <title>About Family Plus</title>
+        <link rel="icon" href="favicon.png"/>
+        
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="style.css">
-        <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-        <script>
-            function loadAnim(){
-                setTimeout(() => {
-                    document.getElementById("abt2").style.opacity = "1";
-                    document.getElementById("abt2").style.marginLeft = "50px";
-                }, 750);
-                setTimeout(() => {
-                    document.getElementById("abt").style.opacity = "1";
-                    document.getElementById("abt").style.lineHeight = "1.6";
-                    document.getElementById("background").style.marginLeft = "50vw";
-                    document.getElementById("background").style.backgroundColor = "royalblue";
-                    document.getElementById("background").style.transform = "scaleX(0)";
-                    document.getElementById("background").style.transformOrigin = "50%";
-                }, 1250);
-                setTimeout(() => {
-                    document.getElementById("background").style.marginLeft = "50vw";
-                }, 250);
-                setTimeout(() => {
-                    document.getElementById("background").style.marginLeft = "-100vw";
-                    document.getElementById("background").style.opacity = "0";
-                }, 500);
-                setTimeout(() => {
-                    document.getElementById("background").style.transform = "scaleX(1)";
-                    document.getElementById("background").style.opacity = "1";
-                }, 1700);
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="MDB-Free_4.19.1/css/mdb.css">
+        <script src="https://kit.fontawesome.com/5929f9a901.js" crossorigin="anonymous"></script>
+        <style>
+            body {
+                font-family: 'Source Serif Pro';
             }
-        </script>
+              
+            html, body, header, .view { height: 100%; }
+    
+            .navbar:not(.top-nav-collapse) {
+              background: transparent !important;
+            }
+            @media (max-width: 740px) {
+              html, body, header, .view {
+                height: 100vh;
+              }
+            }
+            @media (max-width: 350px) {
+              .display-3 {
+                font-size: 2.5rem;
+              }
+            }
+  
+            h5 { letter-spacing: 3px;}  
+            .hr-light { border-top: 6px solid #fff; border-radius: 20px; width: 200px;}
+        </style>
     </head>
-    <body onload="loadAnim();" style="overflow: hidden">
-        <div id="background" style="width: 100vw; height: 100vh; background-color: #cccccc33; margin-left: 100vw; transition: all 0.5s ease-out; box-shadow: inset 5px 5px 5px black;"></div>
-        <div class="header" id="head">
-            <h2 style="margin-left: 50px; cursor: pointer;" onclick="document.location.pathname='/index.html'">Family Plus</h2>
-            <a href="about.html" class="href" style="top: 4%;left: 80%;">About</a>
-            <a href="landing.html" class="href" style="top: 4%;left: 85%;">Login</a>
-            <a href="landing.html" class="href" style="top: 4%;left: 90%;">Sign Up</a>
-        </div>
-        <div id="firstpage1">
-            <h1 style="justify-content: start; color: red; font-weight: 400; font-size: 20px; opacity: 0; margin-left: 500px;" id="abt2">The Goal Of Family Plus</h1>
-            <p style="color: white; font-weight: 100; font-size: 23px; opacity: 0; line-height: 2.5;" id="abt">Family Plus is created to promote security and<br>
-            welfare amongst family. It aims to secure families<br>
-            from financial problems, medical problems, and<br>
-            outside threats by taking preventive and precautionary<br>
-            measures ahead in time. This app in the future can<br>
-            also be used by forthcoming generations for official<br>
-            documentation purposes.</p>
-        </div>
+    <body style="overflow: hidden" aria-busy="true">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top scrolling-navbar">
+            <div class="container">
+              <a class="navbar-brand" href="index.html"><img src="logo.png" height="50" width="50">Family Plus</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#naver" aria-controls="naver" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="naver">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link waves-effect waves-light" href="about.html">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="login.html">Sign Up</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="login.html">Log In</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <!-- Full Page Intro -->
+          <div class="view jarallax" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0;" data-jarallax-original-styles="background-image: url('https://wallpapercave.com/wp/wp4469529.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+              <!-- Content -->
+              <div class="container">
+                <!--Grid row-->
+                <div class="row">
+                  <!--Grid column-->
+                  <div class="col-md-12 mb-4 white-text text-justify">
+                    <h1 class="display-4 text-uppercase font-weight-bold wow fadeInLeft animated" data-wow-delay="0.2s" style="visibility: visible; animation-name: fadeInLeft; animation-delay: 0.3s; font-weight: 700">The Goal of family plus</h1>
+                    <p class="text-uppercase mb-4 white-text wow fadeInDown animated lead" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInDown; animation-delay: 0.4s; font-weight: 200; backdrop-filter: blur(3px);">
+                        Family Plus is created to promote security and
+                        welfare amongst family members. It aims to secure families
+                        from financial problems, medical problems, and
+                        outside threats by taking preventive and precautionary
+                        measures ahead in time. This app in the future can
+                        also be used by forthcoming generations for official
+                        documentation purposes.
+                    </p>
+                    <!--a class="btn btn-outline-white wow fadeInDown waves-effect waves-light animated" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInDown; animation-delay: 0.4s;" href="landing.html">Join Now</a>
+                    <a class="btn btn-secondary" href="about.html">About</a-->
+                  </div>
+                  <!--Grid column-->
+                </div>
+                <!--Grid row-->
+              </div>
+              <!-- Content -->
+            </div>
+            <!-- Mask & flexbox options-->
+          <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://wallpapercave.com/wp/wp4469529.jpg&quot;); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div></div>
+        <!-- jQuery -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="MDB-Free_4.19.1/js/mdb.min.js"></script>
+        <script>new WOW().init();</script>
         <script src="script.js"></script>
     </body>
 </html>

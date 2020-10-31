@@ -1,205 +1,300 @@
+//Database variable
 var database = firebase.database();
+var auth = firebase.auth();
+//Contains all the accounts in the database
 var accs;
+//Contains the account with which the user has logged in
 var acc;
 
-        
-const LoginBody = '<div id="background" style="position: absolute; top: 0%; left: 0%; height: 100vh; width: 100vw;"></div><div class="header" id="head" style="backdrop-filter: blur(5px);"><h2 style="margin-left: 50px; cursor: pointer; color: black;" onclick="document.location.pathname=`/index.html`">Family Plus</h2><a href="about.html" class="href" style="top: 4%;left: 80%; color: black;">About</a><a href="landing.html" class="href" style="top: 4%;left: 85%; color: black;">Login</a><a href="landing.html" class="href" style="top: 4%;left: 90%; color: black;">Sign Up</a></div><div id="Logindiv"><h3 style="margin-left: 32.25%;">Login to Family Plus</h3><input type="text" id="username" onfocus="document.getElementById(`usela`).style.top=`19%`;" onblur="if(this.value == ``)document.getElementById(`usela`).style.top=`24%`;"></input><br><label for = "username" class="username" style="margin-bottom: 0px;" id="usela">Username</label><br><input type="password" id="password" onfocus="document.getElementById(`pssla`).style.top= `40%`;" onblur="if(this.value == ``)document.getElementById(`pssla`).style.top=`45%`;"></input><br><label for="password"class="password" style="margin-bottom: 0px" id="pssla">Password</label><br><button type="button" class="logBtn" onclick="login()">Login</button><button onclick="signup();" class="logBtn" style="margin-left: 10px">Sign Up</button></div>';
-const Dashboard = '<body style="background-image:none;"><div style="position: absolute; top: 0%;color: black; background-color: cornflowerblue; width: 100%;"><h2 style="margin-left: 10px;">Family Plus</h2><img src="user-solid.svg" width="30" height="30" style="position: absolute; top: 20%; left: 75%;"><h3 style="position:absolute; top: 0%; left: 78%;">Sample User Name</h3><button onclick="logout();" id="logoutBtn">Log Out</button></div><div class="sidenav"><div id="Das" onclick="changenav(`das`);">Dashboard</div><div id="Fam" onclick="changenav(`fam`);">Family Tree</div><div id="Loc" onclick="changenav(`loc`);">Track Family</div></div><div id="maincontent" style="background-color: white; text-align: center;"><h3>Your family tree</h3></div></body>';
-
+//Default screen when the page first loads up
 var landingState = "login";
-loadNam = ()=> {
-    setTimeout(() => {
-        document.getElementById("firstpageh1").style.marginLeft = "0px";
-        document.getElementById("firstpageh1").style.opacity = "1";
-    }, 250);
-    setTimeout(() => {
-        document.getElementById("firstpageh2").style.marginTop = "0px";
-        document.getElementById("firstpageh2").style.opacity = "1";
-    }, 1000);
-    setTimeout(() => {
-        document.getElementById("firstpageBtn").style.marginLeft = "0px";
-        document.getElementById("firstpageBtn").style.opacity = "1";
-        document.getElementById("firstpage").onmousemove = (event) =>{
-            let x = Math.floor(event.screenX - 188);
-            let y = Math.floor(event.screenY - 131);
-            let old_max = 394;
-            let old_min = 71;
-            let ymap = ( (y - old_min) / (old_max - old_min) ) * (5 - (-5)) + (-5);
-            old_max = 394;
-            old_min = -1;
-            let xmap = ( (x - old_min) / (old_max - old_min) ) * (5 - (-5)) + (-5);
-            document.getElementById("firstpage").style.transform = "rotateX("+(-ymap)+"deg) rotateY("+(xmap)+"deg)";
-        };
-    }, 1000);
-    setTimeout(() => {
-        VANTA.HALO({
-                el: "#background",
-                mouseControls: true,
-                touchControls: true,
-                gyroControls: false,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                baseColor: 0x947de,
-                backgroundColor: 0xb102d
-          });
-    }, 750);
-}
-let header = document.getElementById("head");
-let sticky = header.offsetTop;
+var Userflag = "login";
+var UserSetup;
 
-Login = ()=>window.location.href="/landing.html";
+window.addEventListener("load",function (){
+    auth.onAuthStateChanged(function(user){
+        if (user) {
+            if(user.displayName == null)
+                UserSetup = false;
+            else
+                UserSetup = true;
+            database.ref('accounts').on('value', function(data){
+                accs = data.val();
+                if(landingState == "login"){
+                    if(Userflag == "login" && UserSetup){
+                        acc = new account(accs[user.displayName]);
+                        if(accs)
+                            if(accs[acc.name].family == null)
+                                acc.family = null;
 
-function logout(){
-    acc = undefined;
-    landingState = "login";
-    document.body.innerHTML = LoginBody;
-}
+                        console.log("hello");
+                    } else if(Userflag == "signup"){
+                        acc = new account();
+                        landingState = "dashboard";
+                        createDashboard();
+                    }
+                    document.getElementById("login-nav").style.visibility = "hidden";
+                    document.getElementById("login-div").style.visibility = "hidden";
+                    document.getElementById("landing-nav").style.visibility = "visible";
+                    document.getElementById("landing-div").style.visibility = "visible";
+                    landingState = "dashboard";
+                    createDashboard();
+                    document.getElementById("maincontent").style.background = "linear-gradient(#ee9ca7, #ffdde1)";
+                }
+            });
+        }
+        else {
+            document.getElementById("login-nav").style.visibility = "visible";
+            document.getElementById("login-div").style.visibility = "visible";
+            document.getElementById("landing-nav").style.visibility = "hidden";
+            document.getElementById("landing-div").style.visibility = "hidden";
+            landingState = "login";
+        }
+    });
+});
+
+//Function to linput the account details from the database when the user logs in
 function login(){
-    let name = document.getElementById("username");
-    let pass = document.getElementById("password");
+    //Email Validation
+    let email = document.getElementById("email").value;
+    if(email == "") { alert("We need email"); return null;}
+    let regx = /^([a-z 0-9\.-]+)@([a-z0-9-]+).([a-z]{2,8})(.[a-z]{2,8})?$/
+    if(regx.test(email) == false) {alert("email invalid"); return null;}
 
-    if(landingState == "login"){
-        let found = false;
-        let found2 = false;
-        for(var s in accs){
-            if(name.value == s){
-                found = true;
-                if(pass.value == accs[s].sd.password)
-                    found2 = true;
-            }
-        }
-        if(found == false){
-            alert("Username not found");
-            return null;
-        } else if(found2 == false){
-            alert("Wrong password. Please try again");
-            return null;
-        }
-        acc = new account(accs[name.value].sd);
-        if(accs[acc.username].sd.family == null)
-            acc.family = null;
-    }
-    landingState = "dashboard";
-    document.body.innerHTML = Dashboard;
-    createDashboard();
+    //Password validation
+    let pass = document.getElementById("password").value;
+    if(pass == '') {alert("We need password"); return null;}
+    if(pass.length < 6) {alert("password should be minimum 6 characters long"); return null;}
+
+    Userflag = "login";
+
+    //Creating new firebase account
+    auth.signInWithEmailAndPassword(email, pass).catch(function(err) {
+        console.log(err);
+        let errCode = err.code;
+        let errMsg = err.message;
+        alert(errMsg);
+    });
 }
+//Function to create an account when the user signs up
 function signup(){
-    let name = document.getElementById("username");
-    let pass = document.getElementById("password");
+    //Email Validation
+    let email = document.getElementById("email").value;
+    if(email == "") { alert("We need email"); return null;}
+    let regx = /^([a-z 0-9\.-]+)@([a-z0-9-]+).([a-z]{2,8})(.[a-z]{2,8})?$/
+    if(regx.test(email) == false) {alert("email invalid"); return null;}
 
-    if(landingState == "login"){
-        if(name.value==""){
-            alert("we need a username!");
-            return null;
-        }
-        if(pass.value==""){
-            alert("we need a password!");
-            return null;
-        } else if(pass.value.length < 6){
-            alert("password must be of at least 6 characters");
-            return null;
-        }
-        for(var a in accs){
-            if(name.value == a){
-                alert("Existing account with given username. Please login");
-                return null;
+    //Password validation
+    let pass = document.getElementById("password").value;
+    if(pass == '') {alert("We need password"); return null;}
+    if(pass.length < 6) {alert("password should be minimum 6 characters long"); return null;}
+
+    Userflag = "signup";
+
+    //Creating new firebase account
+    auth.createUserWithEmailAndPassword(email, pass).catch(function(err) {
+        let errCode = err.code;
+        let errMsg = err.messsage;
+        alert(errMsg);
+    });
+}
+function logout(){
+    auth.signOut().then(function(){
+        document.getElementById("login-nav").style.visibility = "visible";
+        document.getElementById("login-div").style.visibility = "visible";
+        document.getElementById("landing-nav").style.visibility = "hidden";
+        document.getElementById("landing-div").style.visibility = "hidden";
+        console.log("user logged out");
+    })
+}
+function verifyAcc() {
+    auth.currentUser.sendEmailVerification().then(function(){
+        alert("Email has been sent. Check your inbox");
+    }).catch(function(err){
+        console.log(err.message);
+    })
+}
+//Function to create the dashboard
+function createDashboard(){
+    if(auth.currentUser.displayName)
+        document.getElementById("nav-user-name").innerHTML = `<i class='fas fa-user prefix'></i> `+auth.currentUser.displayName;
+    else
+        document.getElementById("nav-user-name").innerHTML = `<i class='fas fa-user prefix'></i>Your User Name`;
+    
+    let tree = document.getElementById("maincontent");
+    if(auth.currentUser !== null){
+        if(auth.currentUser.emailVerified){
+            if(acc.family == null){
+                tree.innerHTML = `<h3 class="text-uppercase  font-weight-bold"style="color: #0039a6;">Your Family Tree</h3><p class="mt-5 lead">Your family tree is yet to be created</p><button onclick="changenav(\'fam\'); acc.createTree();" class="btn btn-secondary btn-outline-black">Create your Family Tree</button>`;
+            } else {
+                tree.innerHTML = `<h3 class="text-uppercase  font-weight-bold" style="color: #0039a6;">Your Family Tree</h3><hr class="hr-dark" style = "width: 80%;"><div class="tf-tree" id="tree-div"></div><!--h3 class="text-uppercase mt-5">Upcoming events</h3><hr class="hr-dark" style="width: 80%;"><p id="mybirthday" class="lead"-->`;
+               
+                let div = document.getElementById("tree-div");
+                
+                let ul = document.createElement("ul");
+                ul.id = auth.currentUser.displayName;
+
+                let li = document.createElement("li");
+                li.id = auth.currentUser.displayName + "li";
+
+                let span = document.createElement("span");
+                span.classList.add('tf-nc');
+                span.innerHTML = auth.currentUser.displayName;
+
+                var parentul, parentli, parentspan;
+                if(acc.family.parents) {
+                    let family = acc.family;
+                    if(family.parents.father) {
+                        parentul = document.createElement("ul");
+                        parentul.id = family.parents.father.name;
+
+                        parentli = document.createElement("li");
+                        parentli.id = family.parents.father.name+"li";
+
+                        parentspan = document.createElement("span");
+                        parentspan.classList.add('tf-nc');
+                        parentspan.innerHTML = family.parents.father.name;
+
+                        div.appendChild(parentul);
+                        parentul.appendChild(parentli);
+                        parentli.appendChild(parentspan);
+
+                        createTree(accs[acc.family.parents.father.name]);
+                    }
+                } else {
+                    div.appendChild(ul);
+                    ul.appendChild(li);
+                    span.style.background = "linear-gradient(#667eea, #764ba2)";
+                    li.appendChild(span);
+
+                    createTree(acc);
+                }
+
+                for(var name in accs) {
+                    var current = accs[name];
+
+                    if(document.getElementById(name + "li")) {
+                        
+                        let el = document.getElementById(name+"li").children[0];
+                        console.log(el);
+
+                        let day = current.date_of_birth.slice(0,2);
+                        let month = current.date_of_birth.slice(3,5) * 1;
+                        let year = current.date_of_birth.slice(6);
+                        let date = new Date(month-1,day,year)
+
+                        let content1 = "<h5 style='font-weight: 700'>"+current.name+"</h5><p class='lead'>"+current.gender+", born on: "+date.toDateString();
+                        
+                        $(el).tooltip({
+                            html: true,
+                            title: content1,
+                        });
+                    }
+                }
             }
         }
-        acc = new account();
-        acc.createAccount(name.value,pass.value);
-        database.ref('accounts/'+name.value).set({
-            sd: acc
-        });
-        if(accs[acc.username].sd.family == null)
-            acc.family = null;
-    }
-    landingState = "dashboard";
-    document.body.innerHTML = Dashboard;
-    createDashboard();
-}
-function createDashboard(){
-    document.getElementsByTagName("h3")[0].innerHTML = acc.username;
-    let tree = document.getElementById("maincontent");
-    if(acc.family == null){
-        let g = tree.innerHTML;
-        tree.innerHTML = `${g}<p style='margin-top: 30px;'>Your family tree is yet to be created</p><button onclick="changenav(\'fam\'); acc.createTree();">Create your Family Tree</button>`;
-    } else {
-        let g = tree.innerHTML;
-        tree.innerHTML = `${g}<canvas id="famCanvas" width="800" height="500"></canvas>`;
-        drawTree();
-    }
-}
-function drawTree(){
-    let ctx = document.getElementById('famCanvas').getContext('2d');
-    ctx.fillStyle = '#ff4444';
-    ctx.fillRect(350,100,100,50);
-    let mepos = {x: 350, y: 100};
-    ctx.font="bold 25px Recursive";
-    ctx.fillStyle = 'black';
-    ctx.textAlign = "center";
-    ctx.fillText("You", mepos.x+50, mepos.y+35);
-    if(acc.family.sons){
-        ctx.fillRect(mepos.x+45,mepos.y+50,10,15);
-        let sons = acc.family.sons;
-        let le = Object.keys(acc.family.sons).length;
-        let l = mepos.x+le*50;
-        let prevl = l;
-        for(var p in sons){
-            ctx.fillStyle="black";
-            ctx.fillRect(prevl-5,mepos.y+65,10,50);
-            ctx.fillStyle="#ffaaaa";
-            ctx.fillRect(prevl-40,mepos.y+115,80,40);
-            ctx.font="normal 15px Recursive";
-            ctx.fillStyle="black";
-            ctx.fillText(sons[p].name,prevl,140+mepos.y);
-            prevl -= 100;
-        }
-        ctx.fillRect(prevl+100,mepos.y+65,l-prevl-100,10);
-    }
-    if(acc.family.parents){
-        ctx.fillStyle = "black";
-        ctx.fillRect(mepos.x+45,mepos.y-50,10,50);
-        ctx.fillRect(mepos.x,mepos.y-55,100,10);
-        if(acc.family.parents.father){
-            ctx.fillStyle = "#ff2222";
-            ctx.fillRect(mepos.x-100,mepos.y-80,100,50);
-            ctx.font = "bold 13px Recursive";
-            ctx.fillStyle = "black";
-            ctx.fillText("father",mepos.x-50,mepos.y-65);
-            ctx.font = "bold 17px Recursive";
-            ctx.fillText(acc.family.parents.father.name,mepos.x-50,mepos.y-40);
-        }
-        if(acc.family.parents.mother){
-            ctx.fillStyle = "#ff2222";
-            ctx.fillRect(mepos.x+100,mepos.y-80,100,50);
-            ctx.font = "bold 13px Recursive";
-            ctx.fillStyle = "black";
-            ctx.fillText("mother",mepos.x+150,mepos.y-65);
-            ctx.font = "bold 17px Recursive";
-            ctx.fillText(acc.family.parents.mother.name,mepos.x+150,mepos.y-40);
+        else {
+            if(Userflag == "signup" || UserSetup == false){
+                console.log("wor");
+                tree.innerHTML = `<h3 class="text-uppercase font-weight-bold" style="color: #0039a6;">Welcome To Family Plus</h3><hr class="hr-light"><p class="lead text-center">Your account details need to be setup<br><button class="btn btn-secondary" onclick="changenav('set');">Click here to set up your account</button></p>`
+            } else{ 
+                tree.innerHTML = `<h3 class="text-uppercase font-weight-bold" style="color: #0039a6;">Your Family Tree</h3><hr class="hr-dark" style="width: 75%;"><h4 class="h4-responsive text-center">Your Account Is Not Verified Yet</h4><p class="lead text-center">Please verify your account to be able to create a family tree. Click on the button to get a verification mail on your registered email id.</p><button class="btn btn-secondary btn-sm" onclick="verifyAcc();">Click Here to get a verification mail</button>`;
+            }
         }
     }
 }
+//Function to create trees recursively
+function createTree(ant) {
+    if(ant.family) {
+        let el = document.createElement("ul");
+        el.id = ant.name;
+
+        if(ant.family.sons) {
+            for(var name in ant.family.sons) {
+                let current = ant.family.sons[name];
+
+                document.getElementById(ant.name + "li").appendChild(el);
+
+                drawTree(el,current.name, accs[current.name]);
+                createTree(accs[current.name]);
+            }
+        }
+    }
+}
+//Function to display the family tree members in a tree form
+function drawTree(el, name, account){
+    let li = document.createElement("li");
+    li.id = name + "li";
+
+    let span = document.createElement("span");
+    span.classList.add("tf-nc");
+    if(name == acc.name){
+            span.style.background = "linear-gradient(#667eea, #764ba2)";
+            span.style.color = "white";
+    }
+    span.innerHTML = name || account.name;
+
+    el.appendChild(li).appendChild(span);
+}
+//Function to change the screen
 function changenav(asd){
-    var dasBody = '<h3>Your family tree</h3>';
-    var locBody = '<h3>Track your Children Here</h3><p>Track your child\'s location and ensure his/her safety<br><span style="color: red">Warning: You can only track children\'s location</span><br><br><span style="font-weight: bold; font-size: 20px;">This feature has intentionally not been implemented because this is a prototype</span>';
+    let gradients = ["linear-gradient(#667eea, #764ba2)","linear-gradient(#89f7fe, #66a6ff)","linear-gradient(#ff758c, #ff7eb3)","linear-gradient(#ee9ca7, #ffdde1)","linear-gradient(#93a5cf, #e4efe9)"];
+
+    var dasBody = '<h3 style="color: #0039a6;">Your family tree</h3>';
+    var setupBody = '<div class="text-center text-white"><h3>Set up your account</h3><br><h5>What is your username?</h5><input type="text" id="setup-username" placeholder="Your username here..." class="text-left"><br><h5 class="mt-3">What is your gender?</h5><input type="radio" name="setup-gender" value="male" id="setup-gender-male"><label for="setup-gender-male">Male</label><br><input type="radio" name="setup-gender" value="female" id="setup-gender-female"><label for="setup-gender-female">Female</label><br><h5 class="mt-3">Your Date Of Birth:</h5><input type="text" id="setup-dob-input" placeholder="dd-mm-yy"><br><button class="btn btn-secondary mt-5" onclick="setupacc();">set up my account</button></div>'
+    var locBody = '<h3>Hobbies and Professions</h3><p>Setup Your hobbies so that others can know more about you. Also know about others professions so that you dont go to strangers to get your work done.';
+    var profBody = '<div class="text-center text-white"><img src = "user-solid.svg" class="mx-auto my-5" style="width: 15%; height: 15%;" data-toggle="tooltip" title="Change profile pic"><h5 id="profile-name" class="mt-3 font-weight-bold text-uppercase" style="font-size: 2.5rem;"></h5><p class="text-center lead" id="profile-about"></p></div>';
     var famBody;
-    if(acc.family == null)
-        famBody = '<div style="background-color: white;" id="MainDiv"><h2 style="text-align: center;">Create Your own family tree</h2><h3>Add A Family Member</h3><label for="check1">A Child</label><input type="radio" id="check1" name="rela" value="child"><label for="check2">A Sibling</label><input type="radio" id="check2" name="rela" value="sibling" disabled><label for="check3">A Parent</label><input type="radio" id="check3" name="rela" value="parent" disabled><h5>What is your relative\'s username?</h5><input id="famname"><br><br><button onclick="send();">Add Child</button></div>';
-    else {
-        famBody = `<div style="background-color: white;" id="MainDiv"><h3>Add A Family Member</h3><label for="check1">A Child</label><input type="radio" id="check1" name="rela"><label for="check2">     A Sibling</label><input type="radio" id="check2" name="rela" disabled><label for="check3">     A Parent</label><input type="radio" id="check3" name="rela" disabled><h5>What is your relative\'s username?</h5><input id="famname"><br><br><button onclick="send();" style="margin-bottom: 10px;">Add Child</button></div>`;
-    }
     if(asd == "das"){
         document.getElementById("maincontent").innerHTML = dasBody;
+        document.getElementById("maincontent").style.background = gradients[3];
+        document.getElementById("maincontent").style.borderRadius = "10px";
         createDashboard();
     }
     else if(asd == "fam"){
+        if(acc.family == null)
+            famBody = '<div id="MainDiv"><h2 style="text-align: center;">Create your own family tree</h2><hr class="hr-dark" style="margin-bottom: 25px; width: 65%;"><h5>Add A Family Member</h5><label for="check1">A Child</label><input type="radio" id="check1" name="rela" value="child"><label for="check2">A Sibling</label><input type="radio" id="check2" name="rela" value="sibling" disabled><label for="check3">A Parent</label><input type="radio" id="check3" name="rela" value="parent" disabled><h5>What is your relative\'s username?</h5><input id="famname"><br><br><button onclick="send();">Add Child</button></div>';
+        else
+            famBody = `<div id="MainDiv"><h3>Add A Family Member</h3><hr class="hr-dark" style="margin-bottom: 25px; width: 65%;"><label for="check1" style="margin-right: 10px;">A Child</label><input type="radio" id="check1" name="rela" style="margin-right: 10px;"><label for="check2" style="margin-right: 10px;">A Sibling</label><input type="radio" id="check2" name="rela" disabled style="margin-right: 10px;"><label for="check3" style="margin-right: 10px;">A Parent</label><input type="radio" id="check3" name="rela" disabled style="margin-right: 10px;"><h5>What is your relative\'s username?</h5><input id="famname" placeholder="your childs name.."><br><br><button onclick="send();" style="margin-bottom: 10px;" class="btn btn-outline-black">Add Child</button></div>`;
         document.getElementById("maincontent").innerHTML = famBody;
+        document.getElementById("maincontent").style.background = gradients[4];
+        document.getElementById("maincontent").style.border = "2px solid black";
     }
     else if(asd == "loc"){
         document.getElementById("maincontent").innerHTML = locBody;
+        document.getElementById("maincontent").style.border = "2px solid black";
+        document.getElementById("maincontent").style.background = "linear-gradient(#f5f7fa, #c3cfe2)";
+    }
+    else if(asd == "pof"){
+        if(auth.currentUser.displayName){
+            document.getElementById("maincontent").innerHTML = profBody;
+            document.getElementById("profile-name").innerHTML = auth.currentUser.displayName;
+            document.getElementById("profile-about").innerHTML = acc.gender + ", born on " + acc.dob;
+            document.getElementById("maincontent").style.border = "2px solid black";
+            document.getElementById("maincontent").style.background = gradients[1];
+        }
+        else{
+            document.getElementById("maincontent").style.background = gradients[1];
+            document.getElementById("maincontent").style.border = "2px solid black";
+            document.getElementById("maincontent").innerHTML = setupBody;
+        }
+    } 
+    else if(asd == "set"){
+        document.getElementById("maincontent").innerHTML = setupBody;
+        document.getElementById("maincontent").style.background = gradients[0];
+        $( '#maincontent' ).ready(function(){
+            $( '#setup-dob-input' ).datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                maxDate: "+1d",
+                minDate: new Date(1800, 11, 30),
+                yearRange: "-100: +1"
+            });
+        })
     }
 }
+//Function to add the family members
 function send(){
     let name = document.getElementById("famname");
     if(name.value == ""){
@@ -220,4 +315,29 @@ function send(){
         return 0;
     }
     acc.addSon({name: name.value});
+}
+function setupacc(){
+    auth.currentUser.updateProfile({
+        displayName: document.getElementById("setup-username").value
+    }).then(function(){
+        UserSetup = "true";
+        Userflag = "login";
+    
+        let dob = document.getElementById('setup-dob-input').value;
+        let gend = $('input[name=setup-gender]:checked').val();
+        console.log(gend);
+
+        database.ref("accounts/"+auth.currentUser.displayName).set({
+            name: auth.currentUser.displayName,
+            date_of_birth: dob,
+            gender: gend,
+            family: null
+        });
+
+        changenav('das');
+        createDashboard();
+
+    }).catch(function(err){
+        console.log(err);
+    });
 }
