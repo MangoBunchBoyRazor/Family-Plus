@@ -18,6 +18,7 @@ window.addEventListener("load",function (){
                 UserSetup = false;
             else
                 UserSetup = true;
+
             database.ref('accounts').on('value', function(data){
                 accs = data.val();
                 if(landingState == "login"){
@@ -27,7 +28,6 @@ window.addEventListener("load",function (){
                             if(accs[acc.name].family == null)
                                 acc.family = null;
 
-                        console.log("hello");
                     } else if(Userflag == "signup"){
                         acc = new account();
                         landingState = "dashboard";
@@ -38,8 +38,7 @@ window.addEventListener("load",function (){
                     document.getElementById("landing-nav").style.visibility = "visible";
                     document.getElementById("landing-div").style.visibility = "visible";
                     landingState = "dashboard";
-                    createDashboard();
-                    document.getElementById("maincontent").style.background = "linear-gradient(#ee9ca7, #ffdde1)";
+                    changenav('das');
                 }
             });
         }
@@ -69,11 +68,13 @@ function login(){
     Userflag = "login";
 
     //Creating new firebase account
-    auth.signInWithEmailAndPassword(email, pass).catch(function(err) {
-        console.log(err);
+    auth.signInWithEmailAndPassword(email, pass).then(function(){
+        console.log("user logged in");
+    }).catch(function(err) {
         let errCode = err.code;
         let errMsg = err.message;
         alert(errMsg);
+        console.log(errCode);
     });
 }
 //Function to create an account when the user signs up
@@ -92,10 +93,13 @@ function signup(){
     Userflag = "signup";
 
     //Creating new firebase account
-    auth.createUserWithEmailAndPassword(email, pass).catch(function(err) {
+    auth.createUserWithEmailAndPassword(email, pass).then(function(){
+        console.log("user signed up");
+    }).catch(function(err) {
         let errCode = err.code;
-        let errMsg = err.messsage;
+        let errMsg = err.message;
         alert(errMsg);
+        console.log(errCode);
     });
 }
 function logout(){
@@ -254,9 +258,9 @@ function changenav(asd){
     }
     else if(asd == "fam"){
         if(acc.family == null)
-            famBody = '<div id="MainDiv"><h2 style="text-align: center;">Create your own family tree</h2><hr class="hr-dark" style="margin-bottom: 25px; width: 65%;"><h5>Add A Family Member</h5><label for="check1">A Child</label><input type="radio" id="check1" name="rela" value="child"><label for="check2">A Sibling</label><input type="radio" id="check2" name="rela" value="sibling" disabled><label for="check3">A Parent</label><input type="radio" id="check3" name="rela" value="parent" disabled><h5>What is your relative\'s username?</h5><input id="famname"><br><br><button onclick="send();">Add Child</button></div>';
+            famBody = '<div id="MainDiv"><h2 style="text-align: center;">Create your own family tree</h2><hr class="hr-dark" style="margin-bottom: 25px; width: 65%;"><h5>Add A Family Member</h5><h5>What is your child\'s username?</h5><input id="famname"><br><br><button onclick="send();" class="btn btn-secondary">Add Child</button></div>';
         else
-            famBody = `<div id="MainDiv"><h3>Add A Family Member</h3><hr class="hr-dark" style="margin-bottom: 25px; width: 65%;"><label for="check1" style="margin-right: 10px;">A Child</label><input type="radio" id="check1" name="rela" style="margin-right: 10px;"><label for="check2" style="margin-right: 10px;">A Sibling</label><input type="radio" id="check2" name="rela" disabled style="margin-right: 10px;"><label for="check3" style="margin-right: 10px;">A Parent</label><input type="radio" id="check3" name="rela" disabled style="margin-right: 10px;"><h5>What is your relative\'s username?</h5><input id="famname" placeholder="your childs name.."><br><br><button onclick="send();" style="margin-bottom: 10px;" class="btn btn-outline-black">Add Child</button></div>`;
+            famBody = `<div id="MainDiv"><h3>Add A Family Member</h3><hr class="hr-dark" style="margin-bottom: 25px; width: 65%;"><h5>What is your child\'s username?</h5><input id="famname" placeholder="your childs name.."><br><br><button onclick="send();" style="margin-bottom: 10px;" class="btn btn-outline-black">Add Child</button></div>`;
         document.getElementById("maincontent").innerHTML = famBody;
         document.getElementById("maincontent").style.background = gradients[4];
         document.getElementById("maincontent").style.border = "2px solid black";
@@ -334,10 +338,6 @@ function send(){
     let name = document.getElementById("famname");
     if(name.value == ""){
         alert("please give a username");
-        return null;
-    }
-    if(document.getElementById("check1").checked == false){
-        alert("please specify a relation");
         return null;
     }
     let found = false;
