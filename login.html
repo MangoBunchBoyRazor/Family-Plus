@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!--Preloading large image files-->
+        <link rel="preload" href="backgroundImages/loginImg.jpg" as="image">
+        <link rel='prefetch' href="backgroundImages/aboutImg.jpg" as="image">
+
         <script type="text/javascript" src="MDB-Free_4.19.1/js/jquery.min.js"></script>
         <script src="jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js"></script>
         <link href="jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
@@ -17,16 +21,16 @@
         <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
         <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyAGEz3OeWFD5jr4xgYF9TzwaMItJzv9vBg",
-            authDomain: "family-plus-f25c0.firebaseapp.com",
-            databaseURL: "https://family-plus-f25c0.firebaseio.com",
-            projectId: "family-plus-f25c0",
-            storageBucket: "family-plus-f25c0.appspot.com",
-            messagingSenderId: "682166671775",
-            appId: "1:682166671775:web:76ccec7ce47cfce66685aa"
-        };
-        firebase.initializeApp(firebaseConfig);
+          var firebaseConfig = {
+              apiKey: "AIzaSyAGEz3OeWFD5jr4xgYF9TzwaMItJzv9vBg",
+              authDomain: "family-plus-f25c0.firebaseapp.com",
+              databaseURL: "https://family-plus-f25c0.firebaseio.com",
+              projectId: "family-plus-f25c0",
+              storageBucket: "family-plus-f25c0.appspot.com",
+              messagingSenderId: "682166671775",
+              appId: "1:682166671775:web:76ccec7ce47cfce66685aa"
+          };
+          firebase.initializeApp(firebaseConfig);
         </script>
 
         <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
@@ -68,15 +72,10 @@
             }
         </style>
 
-        <!-- jQuery -->
-        <!-- Bootstrap tooltips -->
         <script type="text/javascript" src="MDB-Free_4.19.1/js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
         <script type="text/javascript" src="MDB-Free_4.19.1/js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
         <script type="text/javascript" src="MDB-Free_4.19.1/js/mdb.min.js"></script>
-        <script>new WOW().init();</script>
-        
+        <script>new WOW().init();</script>    
     </head>
     <body>
       <script src="script.js"></script>
@@ -101,15 +100,10 @@
               </div>
             </div>
         </nav>
-        <!-- Full Page Intro -->
         <div class="view jarallax" id="login-div" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0;" data-jarallax-original-styles="background-image: url('backgroundImages/loginImg.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-            <!-- Mask & flexbox options-->
             <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
-              <!-- Content -->
               <div class="container">
-                <!--Grid row-->
                 <div class="row mt-5">
-                  <!--Grid column-->
                   <div class="col-md-6 mb-5 mt-md-0 mt-5 white-text text-center text-md-left" style="backdrop-filter: blur(5px);">
                     <h1 class="h1-responsive text-uppercase white-text wow fadeInLeft animated pt-3" data-wow-delay="0.2s" style="visibility: visible; animation-name: fadeInLeft; animation-delay: 0.3s; font-weight: 700">The Goal of family plus</h1>
                     <hr class="hr-light wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft; animation-name: 0.2s; width: 100%;">
@@ -147,13 +141,9 @@
                         </div>
                     </div>
                   </div>
-                  <!--Grid column-->
                 </div>
-                <!--Grid row-->
               </div>
-              <!-- Content -->
             </div>
-            <!-- Mask & flexbox options-->
           <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;backgroundImages/loginImg.jpg&quot;); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div>
         </div>
         <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar" id="landing-nav" style="visibility: hidden; background-color: cornflowerblue !important;">
@@ -189,7 +179,7 @@
                 </div>
             </div>
         </nav>
-        <div class="view jarallax" id="landing-div" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0; visibility: hidden;" data-jarallax-original-styles="background-image: url('https://wallpapercave.com/wp/wp4469529.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="view jarallax" id="landing-div" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0; visibility: hidden;" data-jarallax-original-styles="background-image: url('backgroundImages/aboutImg.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
             <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
               <div class="container">
                 <div class="row">
@@ -200,7 +190,7 @@
                 </div>
               </div>
             </div>
-            <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://wallpapercave.com/wp/wp4469529.jpg&quot;); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div>
+            <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url('backgroundImages/aboutImg.jpg'); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div>
           </div>
         </div>
   </body>

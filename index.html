@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <!--Preloading large image files-->
+      <link rel="preload" href="backgroundImages/homeImg.jpg" as="image">
+
       <title>Family Plus</title>
       <link rel="icon" href="favicon.png"/>
 
@@ -13,29 +16,10 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
 
-      <!--Firebase Libs-->
-      <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
-
       <!--Bootstrap-->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <link rel="stylesheet" href="MDB-Free_4.19.1/css/mdb.css">
       <script src="https://kit.fontawesome.com/5929f9a901.js" crossorigin="anonymous"></script>
-
-      <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-          apiKey: "AIzaSyAGEz3OeWFD5jr4xgYF9TzwaMItJzv9vBg",
-          authDomain: "family-plus-f25c0.firebaseapp.com",
-          databaseURL: "https://family-plus-f25c0.firebaseio.com",
-          projectId: "family-plus-f25c0",
-          storageBucket: "family-plus-f25c0.appspot.com",
-          messagingSenderId: "682166671775",
-          appId: "1:682166671775:web:76ccec7ce47cfce66685aa"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      </script>
 
       <style>
           body {
@@ -63,7 +47,7 @@
           .hr-light { border-top: 6px solid #fff; border-radius: 20px; width: 200px;}
       </style>
   </head>
-    <body onload = "database.ref('accounts').on('value',(data)=>accs=data.val());" aria-busy="true">
+    <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top scrolling-navbar">
           <div class="container">
             <a class="navbar-brand" href="index.html"><img src="logo.png" height="50" width="50"><strong>Family Plus</strong></a>
@@ -86,7 +70,7 @@
           </div>
         </nav>
         <!-- Full Page Intro -->
-        <div class="view jarallax" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0;" data-jarallax-original-styles="background-image: url('https://wallpaperaccess.com/full/42272.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="view jarallax" data-jarallax="{&quot;speed&quot;: 0.2}" style="background-image: none; background-repeat: no-repeat; background-size: cover; background-position: center center; z-index: 0;" data-jarallax-original-styles="background-image: url('backgroundImages/homeImg.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
           <!-- Mask & flexbox options-->
           <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
             <!-- Content -->
@@ -108,7 +92,7 @@
             <!-- Content -->
           </div>
           <!-- Mask & flexbox options-->
-        <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://wallpaperaccess.com/full/42272.jpg&quot;); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div></div>
+        <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url('backgroundImages/homeImg.jpg'); position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; margin-top: 0px; transform: translate3d(0px, 0px, 0px);"></div></div>
         <!-- Full Page Intro -->
         <!-- jQuery -->
         <script type="text/javascript" src="MDB-Free_4.19.1/js/jquery.min.js"></script>
@@ -118,7 +102,5 @@
         <script type="text/javascript" src="MDB-Free_4.19.1/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="MDB-Free_4.19.1/js/mdb.min.js"></script>
-        <script>new WOW().init();</script>
-        <script src="script.js"></script>
     </body>
 </html>
